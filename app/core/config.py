@@ -19,8 +19,8 @@ class Settings(BaseSettings):
 
     # Telegram Bot
     TELEGRAM_BOT_TOKEN: str = Field(..., description="Telegram Bot Token from BotFather")
-    TELEGRAM_WEBHOOK_SECRET: str = Field(..., description="Secret token for webhook verification")
-    TELEGRAM_WEBHOOK_URL: str = Field(..., description="Public webhook URL for Telegram")
+    TELEGRAM_WEBHOOK_SECRET: str = ""
+    TELEGRAM_WEBHOOK_URL: str = ""
 
     # Neon Database
     DATABASE_URL: str = Field(..., description="Neon PostgreSQL connection string with sslmode=require")

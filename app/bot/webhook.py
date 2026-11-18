@@ -12,12 +12,12 @@ settings = get_settings()
 @router.post("/tg")
 async def telegram_webhook(
     request: Request,
-    x_telegram_bot_api_secret_token: str = Header(..., alias="X-Telegram-Bot-Api-Secret-Token"),
+    x_telegram_bot_api_secret_token: str | None = Header(None, alias="X-Telegram-Bot-Api-Secret-Token"),
     db: AsyncSession = Depends(get_db),
 ):
     """Handle incoming Telegram webhook updates."""
-    # Verify secret token
-    if x_telegram_bot_api_secret_token != settings.TELEGRAM_WEBHOOK_SECRET:
+    # Verify secret token (only when configured)
+    if settings.TELEGRAM_WEBHOOK_SECRET and x_telegram_bot_api_secret_token != settings.TELEGRAM_WEBHOOK_SECRET:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid secret token")
 
     # Get update data
