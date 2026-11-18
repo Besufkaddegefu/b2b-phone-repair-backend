@@ -59,6 +59,16 @@ class Settings(BaseSettings):
     ADMIN_TELEGRAM_IDS: list[int] = Field(default_factory=list)
     ADMIN_CHANNEL_ID: str = ""
 
+    # CORS (comma-separated list of allowed origins, or "*" for all)
+    CORS_ORIGINS: str = "*"
+
+    @property
+    def cors_origins_list(self) -> list[str]:
+        value = self.CORS_ORIGINS.strip()
+        if value == "*" or not value:
+            return ["*"]
+        return [origin.strip() for origin in value.split(",") if origin.strip()]
+
     @property
     def admin_telegram_ids_list(self) -> list[int]:
         if isinstance(self.ADMIN_TELEGRAM_IDS, str):
